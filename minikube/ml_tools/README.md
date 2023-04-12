@@ -18,8 +18,6 @@ Steps:
 
 >Port Forwarding: `kubectl port-forward service/mlflow-minio-service 9000:9000 -n dev`
 
-kubectl port-forward service/mlflow-minio-service 9000:9000 -n dev
-
 3. MlFlow:
 
 - `kubectl apply -k .`
