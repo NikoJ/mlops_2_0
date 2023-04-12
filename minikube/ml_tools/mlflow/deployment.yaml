@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow-deployment
+  template:
+    metadata:
+      labels:
+        app: mlflow-deployment
+    spec:
+      containers:
+      - name: mlflow-deployment
+        image: adacotechjp/mlflow:2.2.2
+        imagePullPolicy: Always
+        command: ["/bin/sh"]
+        args: [
+            "-c", 
+            "pip install prometheus-flask-exporter; 
+            mlflow server 
+            --host=0.0.0.0 
+            --port=5000 
+            --backend-store-uri=postgresql://mlflow_user:mlflow_pwd@mlflow-postgres-0.mlflow-postgres-service.dev.svc.cluster.local:5432/mlflow 
+            --default-artifact-root=s3://mlflow/ 
+            --workers=2"
+            ]
+        env:
+        - name: MLFLOW_S3_ENDPOINT_URL
+          value: localhost:9000
+        - name: AWS_ACCESS_KEY_ID
+          value: "minio"
+        - name: AWS_SECRET_ACCESS_KEY
+          value: "minio123"
+        ports:
+        - name: http
+          containerPort: 5000
+          protocol: TCP
