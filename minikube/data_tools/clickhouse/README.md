@@ -18,7 +18,7 @@ helm upgrade -i clickhouse-operator --namespace=kube-system clickhouse-operator/
 
 `helm uninstall clickhouse-operator --namespace=[NAMESPACE]`
 
-* [NAMESPACE] is the namespace for the kubernetes. 
+>[NAMESPACE] is the namespace for the kubernetes. 
 
 Example: `helm uninstall clickhouse-operator --namespace=kube-system`
 
